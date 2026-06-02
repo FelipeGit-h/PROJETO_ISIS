@@ -1,346 +1,663 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Espaço Isis Perfect Corpore</title>
-    <meta name="description" content="Estética e bem-estar com qualidade e cuidado especial.">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Styles e Configuração Tailwind -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Espaço Isis Perfect Corpore - Estética Avançada</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
         :root {
-            --primaria: #6B5B95;
-            --destaque: #C9A961;
-            --clara: #F8F5F2;
-            --escura: #4A4A68;
+            --primary: #6B5B95; 
+            --primary-dark: #524673; 
+            --gold: #C9A961;
+            --white: #FFFFFF; 
+            --off-white: #F8F7FC; 
+            --gray: #6C6C7D; 
+            --dark: #2D2A3E;
+            --success: #22C55E; 
+            --shadow-lg: 0 16px 48px rgba(107, 91, 149, 0.16);
         }
 
-        /* Estilos do botão WhatsApp flutuante */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 4rem;
-            height: 4rem;
-            background-color: #25d366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
         }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+
+        html { 
+            scroll-behavior: smooth; 
         }
-    </style>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primaria: '#6B5B95',
-                        destaque: '#C9A961',
-                        clara: '#F8F5F2',
-                        escura: '#4A4A68',
-                    },
-                    fontFamily: {
-                        'playfair': ['"Playfair Display"', 'serif'],
-                        'poppins': ['Poppins', 'sans-serif'],
-                    },
-                }
-            }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            color: var(--dark); 
+            background: var(--white); 
+            line-height: 1.6; 
         }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .sombra-personalizada {
-                box-shadow: 0 4px 20px rgba(107, 91, 149, 0.1);
+
+        h1, h2, h3 { 
+            font-family: 'Playfair Display', serif; 
+            color: var(--primary-dark); 
+        }
+
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 24px; 
+        }
+
+        header { 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); 
+            z-index: 1000; 
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.08); 
+        }
+
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 16px 0; 
+        }
+
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            font-size: 1.25rem; 
+            font-weight: 600; 
+            color: var(--primary); 
+            text-decoration: none; 
+        }
+
+        .logo svg { 
+            width: 40px; 
+            height: 40px; 
+        }
+
+        .nav-links { 
+            display: flex; 
+            gap: 32px; 
+            list-style: none; 
+            align-items: center; 
+        }
+
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--dark); 
+            font-weight: 500; 
+            transition: color 0.3s; 
+        }
+
+        .nav-links a:hover { 
+            color: var(--primary); 
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white); 
+            padding: 12px 28px; 
+            border-radius: 50px; 
+            border: none;
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            text-decoration: none; 
+            display: inline-block;
+        }
+
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: var(--shadow-lg); 
+        }
+
+        .hero { 
+            padding: 140px 0 80px; 
+            background: linear-gradient(135deg, var(--off-white) 0%, #F0EDF8 100%); 
+            position: relative; 
+        }
+
+        .hero-content { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 60px; 
+            align-items: center; 
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem; 
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p { 
+            font-size: 1.1rem; 
+            color: var(--gray); 
+            margin-bottom: 32px; 
+        }
+
+        .hero-buttons { 
+            display: flex; 
+            gap: 16px; 
+        }
+
+        .before-after-card { 
+            background: var(--white); 
+            border-radius: 24px; 
+            padding: 20px; 
+            box-shadow: var(--shadow-lg); 
+        }
+
+        .before-after-container { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 4/3; 
+            border-radius: 16px; 
+            overflow: hidden; 
+        }
+
+        .before-image, .after-image { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+        }
+
+        .before-image { 
+            background: linear-gradient(135deg, #E0D4C3 0%, #D4B5A0 100%); 
+        }
+
+        .after-image { 
+            background: linear-gradient(135deg, #F5E6D3 0%, #E8C9A0 100%); 
+            clip-path: inset(0 50% 0 0); 
+            transition: clip-path 0.3s; 
+        }
+
+        .ba-label { 
+            position: absolute; 
+            top: 16px; 
+            padding: 8px 16px; 
+            background: rgba(255,255,255,0.95); 
+            border-radius: 50px; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            color: var(--primary); 
+        }
+
+        .ba-label.before { left: 16px; } 
+        .ba-label.after { right: 16px; }
+
+        .ba-slider { 
+            position: absolute; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 60%; 
+        }
+
+        .ba-slider input { 
+            width: 100%; 
+            accent-color: var(--gold); 
+        }
+
+        .card-title { 
+            text-align: center; 
+            margin-top: 16px; 
+            font-weight: 600; 
+            color: var(--primary-dark); 
+        }
+
+        section { 
+            padding: 80px 0; 
+        }
+
+        .section-header { 
+            text-align: center; 
+            margin-bottom: 56px; 
+        }
+
+        .section-header h2 { 
+            font-size: 2.5rem; 
+            margin-bottom: 16px; 
+        }
+
+        /* Galeria Antes/Depois com Autoplay */
+        .gallery { 
+            background: var(--off-white); 
+        }
+
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 32px; 
+        }
+
+        .gallery-card { 
+            background: var(--white); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.08); 
+            transition: all 0.3s; 
+        }
+
+        .gallery-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-lg); 
+        }
+
+        .gallery-ba { 
+            position: relative; 
+            aspect-ratio: 4/3; 
+            overflow: hidden; 
+        }
+
+        .gallery-before, .gallery-after { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+        }
+
+        .gallery-before { 
+            background: linear-gradient(135deg, #E8DCC8 0%, #D4B5A0 100%); 
+        }
+
+        .gallery-after { 
+            background: linear-gradient(135deg, #F8E8D0 0%, #F0D0A0 100%); 
+            clip-path: inset(0 100% 0 0); 
+            transition: clip-path 1s ease; 
+        }
+
+        .gallery-card.active .gallery-after { 
+            clip-path: inset(0 0 0 0); 
+        }
+
+        .gallery-info { 
+            padding: 20px; 
+        }
+
+        .gallery-info h3 { 
+            font-size: 1.1rem; 
+            margin-bottom: 8px; 
+        }
+
+        .gallery-info p { 
+            color: var(--gray); 
+            font-size: 0.9rem; 
+        }
+
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 32px; 
+        }
+
+        .service-card { 
+            background: var(--white); 
+            border-radius: 20px; 
+            padding: 40px 32px; 
+            text-align: center; 
+            box-shadow: 0 2px 8px rgba(107, 91, 149, 0.08); 
+            transition: all 0.3s; 
+            border: 2px solid transparent; 
+        }
+
+        .service-card:hover { 
+            border-color: var(--gold); 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-lg); 
+        }
+
+        .about { 
+            background: linear-gradient(135deg, var(--off-white) 0%, #F0EDF8 100%); 
+        }
+
+        .about-content { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            text-align: center; 
+        }
+
+        footer { 
+            background: var(--dark); 
+            color: var(--white); 
+            padding: 60px 0 24px; 
+        }
+
+        .footer-content { 
+            display: grid; 
+            grid-template-columns: 2fr 1fr 1fr; 
+            gap: 48px; 
+            margin-bottom: 48px; 
+        }
+
+        .footer-brand h3 { 
+            color: var(--white); 
+            margin-bottom: 16px; 
+        }
+
+        .footer-links h4 { 
+            color: var(--gold); 
+            margin-bottom: 16px; 
+        }
+
+        .footer-links ul { 
+            list-style: none; 
+        }
+
+        .footer-links li { 
+            margin-bottom: 12px; 
+        }
+
+        .footer-links a { 
+            color: rgba(255, 255, 255, 0.7); 
+            text-decoration: none; 
+        }
+
+        .footer-bottom { 
+            padding-top: 24px; 
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            text-align: center; 
+            color: rgba(255, 255, 255, 0.5); 
+        }
+
+        .toast { 
+            position: fixed; 
+            top: 90px; 
+            right: 32px; 
+            background: var(--success); 
+            color: white; 
+            padding: 16px 24px; 
+            border-radius: 8px; 
+            box-shadow: var(--shadow-lg); 
+            z-index: 9999; 
+            display: none; 
+        }
+
+        .toast.show { 
+            display: block; 
+            animation: slideIn 0.3s ease; 
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Menu Mobile */
+        .menu-toggle { 
+            display: none; 
+            font-size: 24px; 
+            cursor: pointer; 
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                right: 0; 
+                background: white; 
+                flex-direction: column; 
+                gap: 16px; 
+                padding: 16px; 
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+                display: none; 
             }
-            .transicao-suave {
-                transition: all 0.3s ease;
-            }
-            .scrolled {
-                background-color: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(8px);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+            .hero-content { grid-template-columns: 1fr; }
+            .hero-text h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
-<body class="font-poppins text-gray-700 bg-clara antialiased">
+<body>
 
-    <!-- ✅ ALERTA DE AGENDAMENTO CONCLUÍDO -->
+    <!-- Alerta de sucesso -->
     @if(session()->has('agendamento_concluido'))
-    <div class="fixed bottom-4 right-4 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-bounce">
+    <div class="toast show" id="toast">
         ✅ Agendamento concluído com sucesso!
     </div>
     @endif
 
-    <!-- ✅ CABEÇALHO -->
-    <header class="fixed w-full top-0 z-40 py-4 px-6 transicao-suave" id="cabecalho">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#inicio" class="text-2xl font-playfair font-bold text-primaria">Isis<span class="text-destaque">Perfect</span></a>
-
-            <!-- Menu Desktop -->
-            <nav class="hidden md:flex gap-8">
-                <a href="#inicio" class="font-medium hover:text-primaria transicao-suave">Início</a>
-                <a href="#sobre" class="font-medium hover:text-primaria transicao-suave">Sobre</a>
-                <a href="#servicos" class="font-medium hover:text-primaria transicao-suave">Serviços</a>
-                <a href="#resultados" class="font-medium hover:text-primaria transicao-suave">Resultados</a>
-                <a href="#contato" class="font-medium hover:text-primaria transicao-suave">Contato</a>
-            </nav>
-
-            <a href="#agendar" class="hidden md:block bg-destaque hover:bg-amber-600 text-white px-6 py-2 rounded-lg font-semibold transicao-suave hover:scale-105">
-                Agendar
+    <!-- Cabeçalho -->
+    <header>
+        <nav class="container">
+            <a href="#inicio" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2.2l3 6.2 6.8 1-4.8 4.7 1.1 6.7-6.1-3.2-6.1 3.2 1.1-6.7L2.2 9.4l6.8-1z"/>
+                </svg>
+                <span>Isis Perfect Corpore</span>
             </a>
 
-            <!-- Botão Menu Mobile -->
-            <button class="md:hidden text-primaria text-2xl" id="btnMenu" aria-label="Abrir menu">
-                ☰
-            </button>
-        </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#resultados">Resultados</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <!-- Botão alterado para Login -->
+                <li><a href="http://localhost:8000/admin" class="btn-primary">Login</a></li>
+            </ul>
 
-        <!-- Menu Mobile -->
-        <div class="md:hidden hidden bg-white absolute w-full left-0 shadow-md" id="menuMobile">
-            <nav class="flex flex-col p-4 gap-3">
-                <a href="#inicio" class="font-medium py-2 hover:text-primaria transicao-suave">Início</a>
-                <a href="#sobre" class="font-medium py-2 hover:text-primaria transicao-suave">Sobre</a>
-                <a href="#servicos" class="font-medium py-2 hover:text-primaria transicao-suave">Serviços</a>
-                <a href="#resultados" class="font-medium py-2 hover:text-primaria transicao-suave">Resultados</a>
-                <a href="#contato" class="font-medium py-2 hover:text-primaria transicao-suave">Contato</a>
-                <a href="#agendar" class="bg-destaque text-white px-4 py-2 rounded-lg text-center font-semibold mt-2">Agendar</a>
-            </nav>
-        </div>
+            <div class="menu-toggle" id="menuToggle">☰</div>
+        </nav>
     </header>
 
-    <!-- ✅ SEÇÃO INÍCIO -->
-    <section id="inicio" class="min-h-screen flex items-center relative overflow-hidden pt-20">
-        <div class="absolute top-0 right-0 w-full h-full opacity-10">
-            <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-                <path d="M477.5,313.5Q429,377,361,420.5Q293,464,208.5,474Q124,484,58.5,422.5Q-7,361,7,262.5Q21,164,87,102Q153,40,241.5,26.5Q330,13,404,77.5Q478,142,477.5,313.5Z" fill="#6B5B95"/>
-            </svg>
-        </div>
-
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="text-center md:text-left">
-                    <h1 class="font-playfair font-bold text-[clamp(2.5rem,5vw,4rem)] leading-tight text-escura mb-4">
-                        Beleza e Bem-Estar <br>
-                        <span class="text-primaria">em um só lugar</span>
-                    </h1>
-                    <p class="text-gray-600 text-lg mb-8 max-w-xl mx-auto md:mx-0">
-                        Cuidados especiais para realçar sua beleza natural e elevar sua autoestima. Tecnologia avançada e atendimento personalizado.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                        <a href="#agendar" class="bg-destaque hover:bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transicao-suave hover:scale-105 sombra-personalizada">
-                            Agende sua Sessão
-                        </a>
-                        <a href="#servicos" class="bg-white hover:bg-gray-50 text-primaria border-2 border-primaria px-8 py-3 rounded-lg font-semibold text-lg transicao-suave hover:scale-105">
-                            Nossos Serviços
-                        </a>
+    <!-- Seção Início -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Beleza e Bem-Estar em um só lugar</h1>
+                    <p>Cuidados especiais para realçar sua beleza natural e elevar sua autoestima. Tecnologia avançada e atendimento personalizado em Goiânia.</p>
+                    <div class="hero-buttons">
+                        <!-- Botão alterado para rota de agendamento -->
+                        <a href="http://localhost:8000/agendar" class="btn-primary">Agende sua Sessão</a>
+                        <a href="#servicos" class="btn-primary" style="background: transparent; border: 2px solid var(--primary); color: var(--primary);">Nossos Serviços</a>
                     </div>
                 </div>
 
-                <div class="relative">
-                    <div class="w-full h-[500px] rounded-3xl overflow-hidden sombra-personalizada relative">
-                        <img src="https://images.unsplash.com/photo-1560750588-73c474c5999c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Espaço de estética" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-primaria/30 to-transparent"></div>
-                    </div>
-                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl sombra-personalizada max-w-xs hidden md:block">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl">✓</div>
-                            <div>
-                                <p class="font-semibold text-escura">Atendimento Especializado</p>
-                                <p class="text-sm text-gray-500">Profissionais qualificados</p>
-                            </div>
+                <div class="before-after-card">
+                    <div class="before-after-container">
+                        <div class="before-image"></div>
+                        <div class="after-image"></div>
+                        <div class="ba-label before">Antes</div>
+                                                <div class="ba-label after">Depois</div>
+                        <div class="ba-slider">
+                            <input type="range" min="0" max="100" value="50" id="slider">
                         </div>
                     </div>
+                    <h3 class="card-title">Resultados Reais</h3>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ✅ SEÇÃO SOBRE NÓS -->
-    <section id="sobre" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="font-playfair font-bold text-[clamp(2rem,4vw,3rem)] text-center text-primaria mb-16">Sobre Nós</h2>
-
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="relative">
-                    <div class="w-full h-[450px] rounded-2xl overflow-hidden sombra-personalizada">
-                        <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sobre nós" class="w-full h-full object-cover">
+    <section id="sobre" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sobre Nós</h2>
+                <p>Conheça um pouco da nossa história e compromisso com você</p>
+            </div>
+            <div class="about-content">
+                <h3 style="color: var(--primary); margin-bottom: 20px; font-size: 1.8rem;">Bem-vindo ao Espaço Isis Perfect Corpore</h3>
+                <p style="margin-bottom: 16px; font-size: 1.05rem;">
+                    Somos um centro de estética e bem-estar dedicado a oferecer tratamentos de alta qualidade, unindo ciência, tecnologia e cuidado humano. Nossa missão é proporcionar a você uma experiência única, onde beleza e saúde caminham lado a lado.
+                </p>
+                <p style="margin-bottom: 24px; font-size: 1.05rem;">
+                    Contamos com uma equipe de profissionais altamente capacitados, prontos para indicar o melhor tratamento para o seu objetivo, sempre com segurança e excelência.
+                </p>
+                <div class="services-grid" style="max-width: 600px; margin: 0 auto 32px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="color: var(--gold); font-size: 1.2rem;">✦</span>
+                        <span>Ambiente confortável e seguro</span>
                     </div>
-                    <div class="absolute -right-4 -bottom-4 bg-primaria text-white p-4 rounded-xl max-w-[200px] sombra-personalizada hidden md:block">
-                        <p class="font-playfair font-bold text-lg">+10 Anos</p>
-                        <p class="text-sm opacity-90">Transformando belezas e vidas</p>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="color: var(--gold); font-size: 1.2rem;">✦</span>
+                        <span>Produtos certificados e aprovados</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="color: var(--gold); font-size: 1.2rem;">✦</span>
+                        <span>Tecnologia de ponta</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span style="color: var(--gold); font-size: 1.2rem;">✦</span>
+                        <span>Atendimento personalizado</span>
                     </div>
                 </div>
-
-                <div>
-                    <h3 class="font-playfair font-semibold text-2xl text-escura mb-4">Bem-vindo ao Espaço Isis Perfect Corpore</h3>
-                    <p class="text-gray-600 mb-4 leading-relaxed">
-                        Somos um centro de estética e bem-estar dedicado a oferecer tratamentos de alta qualidade, unindo ciência, tecnologia e cuidado humano. Nossa missão é proporcionar a você uma experiência única, onde beleza e saúde caminham lado a lado.
-                    </p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Contamos com uma equipe de profissionais altamente capacitados, prontos para indicar o melhor tratamento para o seu objetivo, sempre com segurança e excelência.
-                    </p>
-
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="flex items-center gap-2">
-                            <span class="text-destaque text-xl">✦</span>
-                            <span>Ambiente confortável</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-destaque text-xl">✦</span>
-                            <span>Produtos certificados</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-destaque text-xl">✦</span>
-                            <span>Tecnologia moderna</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-destaque text-xl">✦</span>
-                            <span>Atendimento personalizado</span>
-                        </div>
-                    </div>
-
-                    <a href="#contato" class="inline-block bg-primaria hover:bg-escura text-white px-6 py-3 rounded-lg font-semibold transicao-suave hover:scale-105">
-                        Conheça nossa Estrutura
-                    </a>
-                </div>
+                <a href="#contato" class="btn-primary">Conheça nossa Estrutura</a>
             </div>
         </div>
     </section>
+
     <!-- ✅ SEÇÃO SERVIÇOS -->
-    <section id="servicos" class="py-20 bg-gradient-to-b from-purple-50 to-clara">
-        <div class="container mx-auto px-6">
-            <h2 class="font-playfair font-bold text-[clamp(2rem,4vw,3rem)] text-center text-primaria mb-16">Nossos Serviços</h2>
+    <section id="servicos">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos Serviços</h2>
+                <p>Tratamentos desenvolvidos para cuidar de você da melhor forma</p>
+            </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
+            <div class="services-grid">
                 <!-- Serviço 1: Limpeza de Pele Profunda -->
-                <div class="bg-white rounded-2xl p-8 sombra-personalizada transicao-suave hover:scale-[1.03] hover:shadow-xl">
-                    <div class="w-16 h-16 bg-primaria/10 text-primaria rounded-full flex items-center justify-center mb-6 text-2xl">✨</div>
-                    <h3 class="font-playfair font-semibold text-xl text-primaria mb-3">Limpeza de Pele Profunda</h3>
-                    <p class="text-gray-600 leading-relaxed">
+                <div class="service-card">
+                    <div style="width: 64px; height: 64px; background: rgba(107, 91, 149, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">✨</div>
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Limpeza de Pele Profunda</h3>
+                    <p style="color: var(--gray); font-size: 0.95rem;">
                         Remove impurezas, cravos e células mortas, desobstruindo os poros. Deixa a pele mais limpa, saudável, com viço e brilho natural, adequada para todos os tipos de pele.
                     </p>
                 </div>
 
                 <!-- Serviço 2: Microagulhamento -->
-                <div class="bg-white rounded-2xl p-8 sombra-personalizada transicao-suave hover:scale-[1.03] hover:shadow-xl">
-                    <div class="w-16 h-16 bg-primaria/10 text-primaria rounded-full flex items-center justify-center mb-6 text-2xl">🧬</div>
-                    <h3 class="font-playfair font-semibold text-xl text-primaria mb-3">Microagulhamento</h3>
-                    <p class="text-gray-600 leading-relaxed">
+                <div class="service-card">
+                    <div style="width: 64px; height: 64px; background: rgba(107, 91, 149, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">🧬</div>
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Microagulhamento</h3>
+                    <p style="color: var(--gray); font-size: 0.95rem;">
                         Estimula a produção natural de colágeno e elastina. Trata cicatrizes de acne, reduz linhas de expressão, fecha poros e melhora significativamente a textura e firmeza da pele.
                     </p>
                 </div>
-<!-- Serviço 3: Peeling Químico -->
-                <div class="bg-white rounded-2xl p-8 sombra-personalizada transicao-suave hover:scale-[1.03] hover:shadow-xl">
-                    <div class="w-16 h-16 bg-primaria/10 text-primaria rounded-full flex items-center justify-center mb-6 text-2xl">🌿</div>
-                    <h3 class="font-playfair font-semibold text-xl text-primaria mb-3">Peeling Químico</h3>
- 		    <p class="text-gray-600 leading-relaxed">
+
+                <!-- Serviço 3: Peeling Químico -->
+                <div class="service-card">
+                    <div style="width: 64px; height: 64px; background: rgba(107, 91, 149, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">🌿</div>
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Peeling Químico</h3>
+                    <p style="color: var(--gray); font-size: 0.95rem;">
                         Renovação celular controlada que clareia manchas, uniformiza o tom da pele, suaviza linhas finas e trata danos causados pelo sol. Resultados visíveis desde a primeira sessão.
                     </p>
                 </div>
 
                 <!-- Serviço 4: Harmonização Facial -->
-                <div class="bg-white rounded-2xl p-8 sombra-personalizada transicao-suave hover:scale-[1.03] hover:shadow-xl">
-                    <div class="w-16 h-16 bg-primaria/10 text-primaria rounded-full flex items-center justify-center mb-6 text-2xl">💫</div>
-                    <h3 class="font-playfair font-semibold text-xl text-primaria mb-3">Harmonização Facial</h3>
-                    <p class="text-gray-600 leading-relaxed">
+                <div class="service-card">
+                    <div style="width: 64px; height: 64px; background: rgba(107, 91, 149, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">💫</div>
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Harmonização Facial</h3>
+                    <p style="color: var(--gray); font-size: 0.95rem;">
                         Valoriza os traços naturais equilibrando o rosto. Define contornos, preenche sulcos, devolve volume perdido e melhora a simetria, com resultado natural e elegante.
                     </p>
                 </div>
 
                 <!-- Serviço 5: Dermaplaning -->
-                <div class="bg-clara rounded-2xl overflow-hidden sombra-personalizada transicao-suave hover:scale-[1.02]">
-                    <div class="relative h-60 overflow-hidden">
-                        <div class="flex h-full">
-                            <div class="w-1/2"><img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Antes dermaplaning" class="w-full h-full object-cover"></div>
-                            <div class="w-1/2"><img src="https://images.unsplash.com/photo-1564257631475-4092d1a81f29?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="depois dermaplaning" class="w-full h-full object-cover"></div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                            <h3 class="text-white font-semibold text-lg">Dermaplaning</h3>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-gray-600">Remoção de pelinhos e células mortas → pele de vidro, brilho e maquiagem perfeita.</p>
-                    </div>
+                <div class="service-card">
+                    <div style="width: 64px; height: 64px; background: rgba(107, 91, 149, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">✦</div>
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Dermaplaning</h3>
+                    <p style="color: var(--gray); font-size: 0.95rem;">
+                        Remoção de pelinhos e células mortas → pele de vidro, brilho e maquiagem perfeita.
+                    </p>
                 </div>
 
                 <!-- Serviço 6: Tratamento Anti-Acne -->
-                <div class="bg-clara rounded-2xl overflow-hidden sombra-personalizada transicao-suave hover:scale-[1.02]">
-                    <div class="relative h-60 overflow-hidden">
-                        <div class="flex h-full">
-                            <div class="w-1/2"><img src="https://images.unsplash.com/photo-1594489428738-c133f126390f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="antes anti-acne" class="w-full h-full object-cover"></div>
-                            <div class="w-1/2"><img src="https://images.unsplash.com/photo-1583846783214-7227a2999852?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="depois anti-acne" class="w-full h-full object-cover"></div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                            <h3 class="text-white font-semibold text-lg">Tratamento Anti-Acne</h3>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-gray-600">Controle da oleosidade, redução de espinhas e marcas, pele limpa e saudável.</p>
-                    </div>
+                <div class="service-card">
+                    <div style="width: 64px; height: 64px; background: rgba(107, 91, 149, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.5rem;">⚕️</div>
+                    <h3 style="margin-bottom: 12px; font-size: 1.2rem;">Tratamento Anti-Acne</h3>
+                    <p style="color: var(--gray); font-size: 0.95rem;">
+                        Controle da oleosidade, redução de espinhas e marcas, pele limpa e saudável.
+                    </p>
                 </div>
-
             </div>
 
-            <div class="text-center mt-16">
-                <a href="/agendar" class="inline-block bg-destaque hover:bg-amber-600 text-white font-semibold px-8 py-4 rounded-lg text-lg sombra-personalizada transicao-suave transform hover:-translate-y-1">
-                    Agendar Avaliação
-                </a>
+            <div class="text-center" style="margin-top: 64px;">
+                <!-- Botão alterado para rota de agendamento -->
+                <a href="http://localhost:8000/agendar" class="btn-primary">Agendar Avaliação</a>
             </div>
         </div>
     </section>
 
-    <!-- ✅ SEÇÃO RESULTADOS -->
-    <section id="resultados" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="font-playfair font-bold text-[clamp(2rem,4vw,3rem)] text-center text-primaria mb-16">Resultados Reais</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="rounded-2xl overflow-hidden sombra-personalizada">
-                    <img src="https://images.unsplash.com/photo-1560750588-73c474c5999c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Resultado de tratamento estético" class="w-full h-64 object-cover">
+    <!-- ✅ SEÇÃO RESULTADOS / GALERIA -->
+    <section id="resultados" class="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Resultados Reais</h2>
+                <p>Veja a transformação que nossos tratamentos proporcionam</p>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-card">
+                    <div class="gallery-ba">
+                        <div class="gallery-before"></div>
+                        <div class="gallery-after"></div>
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Rejuvenescimento Facial</h3>
+                        <p>Melhora significativa na textura e firmeza da pele</p>
+                    </div>
                 </div>
-                <div class="rounded-2xl overflow-hidden sombra-personalizada">
-                    <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Resultado de tratamento estético" class="w-full h-64 object-cover">
+
+                <div class="gallery-card">
+                    <div class="gallery-ba">
+                        <div class="gallery-before"></div>
+                        <div class="gallery-after"></div>
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Clareamento de Manchas</h3>
+                        <p>Tom de pele uniforme e mais iluminado</p>
+                    </div>
                 </div>
-                <div class="rounded-2xl overflow-hidden sombra-personalizada">
-                    <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Resultado de tratamento estético" class="w-full h-64 object-cover">
+
+                <div class="gallery-card">
+                    <div class="gallery-ba">
+                        <div class="gallery-before"></div>
+                        <div class="gallery-after"></div>
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Tratamento de Acne</h3>
+                        <p>Redução de inflamações e marcas pós-acne</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ✅ SEÇÃO AGENDAR / CONTATO -->
-    <section id="agendar" class="py-20 bg-gradient-to-b from-clara to-purple-50" id="contato">
-        <div class="container mx-auto px-6">
-            <h2 class="font-playfair font-bold text-[clamp(2rem,4vw,3rem)] text-center text-primaria mb-16">Agende sua Visita</h2>
-            <div class="max-w-4xl mx-auto bg-white rounded-2xl sombra-personalizada p-8 md:p-12">
-                <div class="grid md:grid-cols-2 gap-12">
+    <section id="contato">
+        <div class="container">
+            <div class="section-header">
+                <h2>Agende sua Visita</h2>
+                <p>Estamos prontos para atender você com todo carinho e segurança</p>
+            </div>
+
+            <div style="max-width: 800px; margin: 0 auto; background: var(--white); border-radius: 24px; padding: 40px; box-shadow: 0 4px 20px rgba(107, 91, 149, 0.1);">
+                <div class="services-grid">
                     <div>
-                        <h3 class="font-playfair font-semibold text-2xl text-escura mb-4">Entre em Contato</h3>
-                        <p class="text-gray-600 mb-6">Estamos prontos para receber você e oferecer o melhor atendimento.</p>
-                        <ul class="space-y-3 text-gray-600">
-                            <li class="flex items-center gap-3">📍 Goiânia - GO</li>
-                            <li class="flex items-center gap-3">⏰ Seg a Sex: 08h às 19h | Sáb: 08h às 14h</li>
-                            <li class="flex items-center gap-3">📞 <a href="https://wa.me/5562993327376" class="text-destaque hover:underline">62 99332-7376</a></li>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--primary-dark);">Entre em Contato</h3>
+                        <p style="color: var(--gray); margin-bottom: 24px;">
+                            Nossa equipe está disponível para tirar dúvidas e agendar o seu horário.
+                        </p>
+                        <ul style="list-style: none; color: var(--gray); line-height: 2;">
+                            <li style="display: flex; align-items: center; gap: 8px;">📍 Goiânia - GO</li>
+                            <li style="display: flex; align-items: center; gap: 8px;">⏰ Seg a Sex: 08h às 19h | Sáb: 08h às 14h</li>
+                            <li style="display: flex; align-items: center; gap: 8px;">📞 <a href="https://wa.me/5562993327376" style="color: var(--gold); text-decoration: none; font-weight: 500;">62 99332-7376</a></li>
                         </ul>
                     </div>
-                    <div class="flex items-center justify-center">
-                        <a href="https://wa.me/5562993327376?text=Olá! Gostaria de agendar uma avaliação." target="_blank" class="w-full bg-green-600 hover:bg-green-700 text-white text-center py-4 px-6 rounded-lg font-semibold text-lg transicao-suave hover:scale-105 sombra-personalizada">
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <a href="https://wa.me/5562993327376?text=Olá! Gostaria de agendar uma avaliação." target="_blank" class="btn-primary" style="background: #25d366; width: 100%; text-align: center;">
                             📱 Agendar pelo WhatsApp
                         </a>
                     </div>
@@ -350,36 +667,40 @@
     </section>
 
     <!-- ✅ RODAPÉ -->
-    <footer class="bg-escura text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="font-playfair font-bold text-2xl mb-3">Isis<span class="text-destaque">Perfect</span></h3>
-                    <p class="text-gray-300">Estética avançada com tecnologia e carinho em Goiânia.</p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Isis Perfect Corpore</h3>
+                    <p style="color: rgba(255,255,255,0.7);">
+                        Estética avançada com tecnologia e carinho em Goiânia.
+                    </p>
                 </div>
-                <div>
-                    <h4 class="font-semibold text-lg mb-3">Links Rápidos</h4>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="#inicio" class="hover:text-destaque transicao-suave">Início</a></li>
-                        <li><a href="#sobre" class="hover:text-destaque transicao-suave">Sobre</a></li>
-                        <li><a href="#servicos" class="hover:text-destaque transicao-suave">Serviços</a></li>
-                        <li><a href="{{ route('agendar') }}" class="hover:text-destaque transicao-suave">Agendar</a></li>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="http://localhost:8000/agendar">Agendar</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-semibold text-lg mb-3">Contato</h4>
-                    <p class="text-gray-300">Goiânia - GO<br>
-                    <a href="https://wa.me/5562993327376" class="hover:text-destaque transicao-suave">WhatsApp: 62 99332-7376</a></p>
+                <div class="footer-links">
+                    <h4>Contato</h4>
+                    <p style="color: rgba(255,255,255,0.7);">
+                        Goiânia - GO<br>
+                        <a href="https://wa.me/5562993327376" style="color: var(--gold); text-decoration: none;">WhatsApp: 62 99332-7376</a>
+                    </p>
                 </div>
             </div>
-            <div class="border-t border-gray-600 pt-6 text-center text-gray-400">
+            <div class="footer-bottom">
                 <p>© 2026 Espaço Isis Perfect Corpore. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
 
     <!-- ✅ BOTÃO WHATSAPP FLUTUANTE -->
-    <a href="https://wa.me/5562993327376?text=Olá! Gostaria de agendar uma avaliação." class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <a href="https://wa.me/5562993327376?text=Olá! Gostaria de agendar uma avaliação." class="whatsapp-float" target="_blank" style="position: fixed; bottom: 2rem; right: 2rem; width: 4rem; height: 4rem; background-color: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0.16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
         </svg>
@@ -389,39 +710,50 @@
     <script>
         // Header scroll efeito
         window.addEventListener('scroll', () => {
-            document.getElementById('cabecalho').classList.toggle('scrolled', window.scrollY > 50);
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
         // Menu Mobile
-        const btnMenu = document.getElementById('btnMenu');
-        const menuMobile = document.getElementById('menuMobile');
+        const btnMenu = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
         btnMenu.addEventListener('click', () => {
-            menuMobile.classList.toggle('hidden');
+            navLinks.classList.toggle('active');
         });
 
         // Fechar menu ao clicar no link
-        document.querySelectorAll('#menuMobile a').forEach(link => {
-            link.addEventListener('click', () => menuMobile.classList.add('hidden'));
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
-// Galeria autoplay
-let currentIndex = 0;
-const cards = document.querySelectorAll('.gallery-card');
-if (cards.length > 0) {
-    function autoplayGallery() {
-        cards.forEach(c => c.classList.remove('active'));
-        cards[currentIndex].classList.add('active');
-        currentIndex = (currentIndex + 1) % cards.length;
-    }
-    autoplayGallery();
-    setInterval(autoplayGallery, 3000);
-}
 
-// Toast auto-hide
-setTimeout(() => {
-    const toast = document.getElementById('toast');
-    if (toast) toast.classList.remove('show');
-}, 4000);
-</script>
+        // Slider Antes/Depois principal
+        const slider = document.getElementById('slider');
+        const afterImage = document.querySelector('.after-image');
+        if(slider && afterImage) {
+            slider.addEventListener('input', () => {
+                afterImage.style.clipPath = `inset(0 ${100 - slider.value}% 0 0)`;
+            });
+        }
+
+        // Galeria autoplay CORRIGIDO
+        let currentIndex = 0;
+        const cards = document.querySelectorAll('.gallery-card');
+        if (cards.length > 0) {
+            function autoplayGallery() {
+                cards.forEach(c => c.classList.remove('active'));
+                cards[currentIndex].classList.add('active');
+                currentIndex = (currentIndex + 1) % cards.length;
+            }
+            autoplayGallery();
+            setInterval(autoplayGallery, 3000);
+        }
+
+        // Toast auto-hide
+        setTimeout(() => {
+            const toast = document.getElementById('toast');
+            if (toast) toast.classList.remove('show');
+        }, 4000);
+    </script>
 
 </body>
 </html>
